@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSHRD Phone Number Validation</title>
+    <link rel="stylesheet" href="./public/output.css">
+</head>
+<body class="min-h-screen w-full flex justify-center items-center 
+             bg-gradient-to-br from-emerald-50 via-emerald-100 to-emerald-200 p-6">
+
+    <div class="w-full max-w-md bg-white/95 backdrop-blur-md shadow-2xl rounded-3xl p-8 
+                border border-emerald-200/60 flex flex-col items-center gap-6">
+
+        <h2 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2 text-center">
+            Korea Software HRD's<br>Phone Number Validation
+        </h2>
+
+        <div class="w-full">
+            <label for="phoneNumber" class="block text-emerald-800 font-medium mb-3 text-lg">
+                Phone Number
+            </label>
+            <input type="tel" id="phoneNumber" 
+                   class="w-full bg-emerald-50 border border-emerald-300 rounded-2xl px-5 py-3.5 
+                          text-gray-900 placeholder-emerald-400 text-base
+                          focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 
+                          transition-all duration-200"
+                   placeholder="Enter your number">
+        </div>
+
+        <button id="checkPhoneNumber" 
+                class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 
+                       text-white font-medium rounded-2xl px-6 py-3.5 shadow-md 
+                       hover:shadow-lg active:scale-[0.98] transition-all duration-200">
+            Check Phone Number
+        </button>
+
+        <p id="result" class="text-sm font-medium min-h-6 mt-2"></p>
+
+    </div>
+
+    <script>
+        const input = document.getElementById("phoneNumber");
+        const button = document.getElementById("checkPhoneNumber");
+        const result = document.getElementById("result");
+
+        const regex = /^(?:0\d{2}([- /]))\d{3}\1\d{3,4}$/;
+
+        function validate() {
+            const value = input.value.trim();
+
+            result.classList.remove("text-green-600", "text-red-600");
+            result.textContent = "";
+
+            if (!value) {
+                result.textContent = "Please enter a phone number";
+                result.classList.add("text-red-600");
+                input.classList.add("border-red-400");
+                input.classList.remove("border-green-500");
+                return;
+            }
+
+            if (regex.test(value)) {
+                result.textContent = "Valid phone number";
+                result.classList.add("text-green-600");
+                input.classList.remove("border-red-400");
+                input.classList.add("border-green-500");
+            } else {
+                result.textContent = "Invalid format. Please enter a valid phone number";
+                result.classList.add("text-red-600");
+                input.classList.remove("border-green-500");
+                input.classList.add("border-red-400");
+            }
+        }
+
+        button.addEventListener("click", validate);
+
+        input.addEventListener("input", () => {
+            const value = input.value.trim();
+            if (value) {
+                if (regex.test(value)) {
+                    input.classList.add("border-green-500");
+                    input.classList.remove("border-red-400");
+                } else {
+                    input.classList.add("border-red-400");
+                    input.classList.remove("border-green-500");
+                }
+            } else {
+                input.classList.remove("border-green-500", "border-red-400");
+            }
+        });
+    </script>
+
+</body>
+</html>
